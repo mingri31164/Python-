@@ -8,4 +8,3 @@
 5. 爬取完成后，运行`app.py`，然后浏览器访问`http://127.0.0.1:5000/`，用户名密码：admin/123
 ![alt text](doc/image-1.png)
 ![alt text](doc/image-2.png)
-![alt text](doc/image-3.png)
