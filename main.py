@@ -12,10 +12,11 @@ PAGE_PROGRESS_FILE = "page_progress.json"
 
 MOVIE_TYPES = ["剧情", "喜剧", "动作", "爱情"]
 
-engine = create_engine("mysql+pymysql://mingri:mingri1234@139.9.51.109:3306/db_douban")
+engine = create_engine("mysql+pymysql://root:123456@127.0.0.1:3306/douban")
 
 # 初始化Redis
 redis_cli = get_redis_cli(2)
+
 
 class Spider:
     def __init__(self):
@@ -61,7 +62,7 @@ class Spider:
             json.dump(self.page_progress, f, ensure_ascii=False)
 
     def get_movie_pages(self, type_name, max_pages=1):
-        for page in range(self.page_progress.get(type_name, 1), max_pages+1):
+        for page in range(self.page_progress.get(type_name, 1), max_pages + 1):
             print('第{}页：'.format(page))
             params = {"start": (page - 1) * 20, "tags": type_name}
             try:
@@ -70,13 +71,12 @@ class Spider:
                 for m in movie_list:
                     if m["type"] == "movie":
                         self.process_movie(m)
-                self.page_progress[type_name] = page+1
+                self.page_progress[type_name] = page + 1
                 # 记录页面进度
                 self.save_page_progress()
             except Exception as e:
                 print(f"处理:{type_name}第{page}页失败: {e}")
                 break
-            
 
     def process_movie(self, movie):
         movie_data = []
@@ -94,13 +94,15 @@ class Spider:
         # 封面
         movie_data.append(path.xpath('//img[@rel="v:image"]/@src')[0])
         # 国家
-        movie_data.append(path.xpath('//span[contains(text(),"制片国家")]/following-sibling::br[1]/preceding-sibling::text()[1]')[0])
+        movie_data.append(
+            path.xpath('//span[contains(text(),"制片国家")]/following-sibling::br[1]/preceding-sibling::text()[1]')[0])
         # 摘要
         movie_data.append(path.xpath('//span[@property="v:summary"]/text()')[0].strip())
         # 类型
         movie_data.append(",".join(path.xpath('//div[@id="info"]/span[@property="v:genre"]/text()')))
         # 语言
-        movie_data.append(path.xpath('//span[contains(text(),"语言")]/following-sibling::br[1]/preceding-sibling::text()[1]')[0])
+        movie_data.append(
+            path.xpath('//span[contains(text(),"语言")]/following-sibling::br[1]/preceding-sibling::text()[1]')[0])
         # 上映日期
         movie_data.append(path.xpath('//span[@property="v:initialReleaseDate"]/text()')[0][:10])
         # 时长
@@ -119,7 +121,7 @@ class Spider:
         df = pd.read_csv("movie_data.csv", encoding="utf-8")
         df.drop_duplicates(subset=["id"], keep="first", inplace=True)
         print("存储到数据库......")
-        df.to_sql("tb_movie", con=engine, index=False, if_exists="append") 
+        df.to_sql("tb_movie", con=engine, index=False, if_exists="append")
 
     def run(self):
         self.init()

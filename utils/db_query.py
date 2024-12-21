@@ -13,7 +13,7 @@ class QueryType(Enum):
 
 # 数据库配置
 db_config = DbConfig.DatabaseConfig(
-    "139.9.51.109", 3306, "mingri", "mingri1234", "db_douban", "utf8"
+    "127.0.0.1", 3306, "root", "123456", "douban", "utf8"
 )
 
 

@@ -54,7 +54,7 @@ CSV_HEADS = [
 # 上映日期匹配正则，剔除非数字和-
 RELEASE_DATE_REMOVE_RE = r"[^0-9-]"
 
-engine = create_engine("mysql+pymysql://mingri:mingri1234@139.9.51.109:3306/db_douban")
+engine = create_engine("mysql+pymysql://root:123456@127.0.0.1:3306/douban")
 
 
 def get_id():

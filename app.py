@@ -1,28 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_cors import CORS
 from utils import db_query
-import config
-from exts import db
-from blueprints.user import bp as user
-
+from utils.redisUtil import get_redis_cli
 
 
 app = Flask(__name__)
-app.config.from_object(config)
-#建立数据建库连接
-db.init_app(app)
-with app.app_context():
-    db.create_all()
-
-#注册蓝图
-app.register_blueprint(user)
-
-#跨域启用
-CORS(app)
 app.secret_key = "mysessionkey"
 
 # 初始化Redis
-from utils.redisUtil import get_redis_cli
 redis_cli = get_redis_cli(0)
 
 # 统一请求拦截
