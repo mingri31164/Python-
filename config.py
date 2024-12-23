@@ -13,7 +13,7 @@ SQLALCHEMY_DATABASE_URI = DB_URI
 REDIS_HOST = '127.0.0.1' # Redis服务器的端口
 REDIS_PORT = '6379' # redis端口号
 REDIS_PASSWORD = '123456' #redis密码
-# REDIS_DB = '1'
+REDIS_DB = '1'
 REDIS_DECODE = True # 如果为True，将返回的数据解码为字符串
 
 
