@@ -5,8 +5,6 @@
 4. 运行`main.py`或者异步的`main_async.py`,异步运行会更快，要获取的电影分类和页码请在程序中自行调整：
 ![alt text](doc/image.png)
 5. 爬取完成后，运行`app.py`，然后浏览器访问`http://127.0.0.1:5000/`，用户名密码：admin/123
-## [登录]
-![alt text](doc/image-1.png)
 
 ## [首页]
 ![alt text](doc/image-2.png)
